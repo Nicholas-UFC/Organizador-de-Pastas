@@ -1,0 +1,73 @@
+{
+    "Imagens": [
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".gif",
+        ".bmp",
+        ".svg",
+        ".webp"
+    ],
+    "Documentos": [
+        ".pdf",
+        ".docx",
+        ".doc",
+        ".txt",
+        ".xlsx",
+        ".xls",
+        ".pptx",
+        ".ppt",
+        ".epub",
+        ".odt"
+    ],
+    "Vídeos": [
+        ".mp4",
+        ".mov",
+        ".avi",
+        ".mkv"
+    ],
+    "Músicas": [
+        ".mp3",
+        ".wav",
+        ".aac"
+    ],
+    "Compactados": [
+        ".zip",
+        ".rar",
+        ".7z"
+    ],
+    "Executáveis": [
+        ".exe",
+        ".msi"
+    ],
+    "Programas": [
+        ".py",
+        ".ipynb",
+        ".java",
+        ".c",
+        ".cpp",
+        ".js",
+        ".html",
+        ".css"
+    ],
+    "Tabelas": [
+        ".csv",
+        ".tsv",
+        ".json",
+        ".xlsm"
+    ],
+    "Projetos": [
+        ".dwg",
+        ".bak",
+        ".psd",
+        ".ai",
+        ".indd",
+        ".sketch"
+    ],
+    "Apresentações": [
+        ".pptx",
+        ".ppt",
+        ".ppsx",
+        ".potx"
+    ]
+}
