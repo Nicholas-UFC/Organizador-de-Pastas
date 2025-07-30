@@ -32,7 +32,7 @@ Se você é um desenvolvedor e deseja executar ou modificar o código.
 **Passos:**
 1.  Clone o repositório para a sua máquina local:
     ```bash
-    git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)](https://github.com/Nicholas-UFC/Organizador-de-Pastas.git)
+    git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
     ```
 2.  Navegue até a pasta do projeto:
     ```bash
