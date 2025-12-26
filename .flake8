@@ -1,0 +1,19 @@
+[flake8]
+# Define o tamanho máximo da linha (compatível com monitores modernos)
+max-line-length = 120
+
+# Pastas que o fiscal NÃO deve olhar (Lixo, Cache e Migrações do Django)
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    venv,
+    env,
+    .venv,
+    */migrations/*
+
+# Regras para ignorar
+ignore =
+    W503,
+    E203
