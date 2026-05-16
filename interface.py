@@ -5,7 +5,6 @@ import sys
 import threading
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
-from typing import Dict, List
 
 from organizador import OrganizadorDeArquivos
 
@@ -14,7 +13,8 @@ def resolver_caminho(caminho_relativo):
     """Obtém o caminho absoluto para um recurso, funciona para dev e para PyInstaller"""
     try:
         # PyInstaller cria uma pasta temp e armazena o caminho em _MEIPASS
-        # Foi adicionado o " type: ignore ", porque o pylance estava apontando erro, por não achar o _MEIPASS no sys, porque ele só existe quando é usado junto do pyinstaller.
+        # Foi adicionado o " type: ignore ", porque o pylance estava apontando erro,
+        # por não achar o _MEIPASS no sys, porque ele só existe quando é usado junto do pyinstaller.
         caminho_base = sys._MEIPASS  # type: ignore
     except Exception:
         # _MEIPASS não existe, então estamos no ambiente de desenvolvimento
@@ -29,7 +29,7 @@ class AppOrganizador(tk.Tk):
     """
 
     # Anotações de tipo para os atributos da classe, definindo a "forma" dos dados.
-    REGRAS: Dict[str, List[str]]  # Dicionário que armazena as regras de organização
+    REGRAS: dict[str, list[str]]  # Dicionário que armazena as regras de organização
     organizador: OrganizadorDeArquivos  # Instância da classe que contém a lógica de negócio para mover os arquivos.
     pasta_selecionada: (
         tk.StringVar
@@ -67,7 +67,7 @@ class AppOrganizador(tk.Tk):
         caminho_regras = resolver_caminho("regras.json")
 
         try:
-            with open(caminho_regras, "r", encoding="utf-8") as f:
+            with open(caminho_regras, encoding="utf-8") as f:
                 self.REGRAS = json.load(f)
             logging.info("Arquivo 'regras.json' carregado com sucesso.")
         except FileNotFoundError:
@@ -79,9 +79,7 @@ class AppOrganizador(tk.Tk):
             )
             self.destroy()
         except json.JSONDecodeError:
-            logging.error(
-                "ERRO CRÍTICO: O arquivo 'regras.json' contém um erro de sintaxe."
-            )
+            logging.error("ERRO CRÍTICO: O arquivo 'regras.json' contém um erro de sintaxe.")
             messagebox.showerror(
                 "Erro Crítico",
                 "O arquivo 'regras.json' está mal formatado!\nVerifique a sintaxe do JSON.",
@@ -116,9 +114,7 @@ class AppOrganizador(tk.Tk):
 
         # Salva os botões como atributos da instância (self.btn_...) para que possamos
         # desabilitá-los e reabilitá-los posteriormente em outros métodos.
-        self.btn_selecionar: tk.Button = tk.Button(
-            frame_selecao, text="Procurar...", command=self.selecionar_pasta
-        )
+        self.btn_selecionar: tk.Button = tk.Button(frame_selecao, text="Procurar...", command=self.selecionar_pasta)
         self.btn_selecionar.pack(side=tk.LEFT, padx=(10, 0))
 
         self.btn_organizar: tk.Button = tk.Button(
@@ -134,14 +130,10 @@ class AppOrganizador(tk.Tk):
 
         # Cria os widgets de feedback (label e barra de progresso) que serão exibidos
         # durante a operação de organização.
-        self.status_label: tk.Label = tk.Label(
-            main_frame, text="", font=("Arial", 10), pady=10
-        )
+        self.status_label: tk.Label = tk.Label(main_frame, text="", font=("Arial", 10), pady=10)
         self.status_label.pack(fill=tk.X, expand=True)
 
-        self.progressbar: ttk.Progressbar = ttk.Progressbar(
-            main_frame, mode="indeterminate"
-        )
+        self.progressbar: ttk.Progressbar = ttk.Progressbar(main_frame, mode="indeterminate")
 
     def selecionar_pasta(self) -> None:
         """
@@ -149,9 +141,7 @@ class AppOrganizador(tk.Tk):
         operacional para que o usuário possa escolher uma pasta de forma segura e intuitiva.
         """
         caminho_pasta: str = filedialog.askdirectory(title="Selecione uma pasta")
-        if (
-            caminho_pasta
-        ):  # Apenas atualiza o caminho se o usuário selecionou uma pasta (não clicou em 'Cancelar')
+        if caminho_pasta:  # Apenas atualiza o caminho se o usuário selecionou uma pasta (não clicou em 'Cancelar')
             self.pasta_selecionada.set(caminho_pasta)
             logging.info(f"Pasta selecionada pelo usuário: '{caminho_pasta}'")
 
@@ -211,23 +201,15 @@ class AppOrganizador(tk.Tk):
         # Analisa o resultado recebido da thread e exibe a mensagem apropriada.
         if isinstance(resultado, Exception):
             logging.error(
-                f"Ocorreu uma exceção não tratada durante a organização.",
+                "Ocorreu uma exceção não tratada durante a organização.",
                 exc_info=resultado,
             )
             self.status_label.config(text="Ocorreu um erro!")
-            messagebox.showerror(
-                "Erro", f"Ocorreu um erro durante a organização:\n{resultado}"
-            )
+            messagebox.showerror("Erro", f"Ocorreu um erro durante a organização:\n{resultado}")
         else:
             movidos = resultado
-            self.status_label.config(
-                text=f"Organização concluída! {movidos} arquivo(s) movido(s)."
-            )
+            self.status_label.config(text=f"Organização concluída! {movidos} arquivo(s) movido(s).")
             if movidos > 0:
-                messagebox.showinfo(
-                    "Sucesso", f"{movidos} arquivo(s) foram organizados com sucesso!"
-                )
+                messagebox.showinfo("Sucesso", f"{movidos} arquivo(s) foram organizados com sucesso!")
             else:
-                messagebox.showinfo(
-                    "Informação", "Nenhum arquivo para organizar foi encontrado."
-                )
+                messagebox.showinfo("Informação", "Nenhum arquivo para organizar foi encontrado.")
